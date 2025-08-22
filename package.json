@@ -1,0 +1,23 @@
+{
+  "name": "gqscramble",
+  "version": "1.0.0",
+  "description": "A small utility for communication and data distributing",
+  "main": "app.coffee",
+  "node_version": "18.20.2",
+  "dependencies": {
+    "sjson5":"0.1.7",
+    "gqcoffee":"1.0.25",
+    "gqdoq":"1.1.1"
+  },
+  "devDependencies":{
+    "mocha":"11.7.1",
+    "coffeescript":"2.7.0"
+  },
+  "scripts": {
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider; coffee app.coffee",
+    "test": "mocha --openssl-legacy-provider --require coffeescript/register -t 20000 test/test.coffee",
+    "install_nbl": "npm install --no-bin-links"
+  },
+  "author": "glidev5@gmail.com",
+  "license": "Apache-2"
+}

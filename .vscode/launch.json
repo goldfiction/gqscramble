@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Attach",
+            "port": 40781,
+            "request": "attach",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
             "runtimeArgs": [
                 "test"
             ],
@@ -26,6 +35,10 @@
                 "--timeout",
                 "20000",
                 "--colors",
+                "--reporter",
+                "progress",
+                "--reporter-option",
+                "output=report.json",
                 "${workspaceFolder}/test/test.coffee"
             ],
             "internalConsoleOptions": "openOnSessionStart",

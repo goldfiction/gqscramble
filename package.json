@@ -8,7 +8,8 @@
     "sjson5":"0.1.7",
     "gqcoffee":"1.0.25",
     "gqdoq":"1.1.1",
-    "zlib":""
+    "zlib":"1.0.5",
+    "blowfish-node":"1.1.4"
   },
   "devDependencies":{
     "mocha":"11.7.1",

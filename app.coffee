@@ -1,21 +1,20 @@
 crypto = require 'crypto'
 Buffer = require('buffer').Buffer
-#zlib = require 'zlib'
-#Blowfish = require 'blowfish-node'
+zlib = require 'zlib'
+Blowfish = require 'blowfish-node'
 
-# this function is now obsolete since blowfish-node is not possible to install
-@testBlowFish1=(_in)->
-  #bf = new Blowfish 'super key',Blowfish.MODE.ECB,Blowfish.PADDING.NULL  #// only key isn't optional
-  #bf.setIv 'abcdefgh' #// optional for ECB mode; bytes length should be equal 8
-  #encoded = bf.encode _in||'input text even with emoji 🎅'
-  #bf.decode encoded,Blowfish.TYPE.STRING # // type is optional
-  #
+@testBlowFish1=(o)->
+  bf = new Blowfish o.secret,Blowfish.MODE.ECB,Blowfish.PADDING.NULL  #// only key isn't optional
+  bf.setIv o.iv #// optional for ECB mode; bytes length should be equal 8
+  encoded = bf.encode o.text||'input text even with emoji 🎅'
+  res=bf.decode encoded,Blowfish.TYPE.STRING # // type is optional
+  
   #// encode the object to base64
   #encoded = bf.encodeToBase64(JSON.stringify({message: 'super secret response api'}));
   #bf.decode(encoded, Blowfish.TYPE.JSON_OBJECT); // type is required to JSON_OBJECT
   # // only for typescript
   #const response = bf.decode<{message: string}>(encoded, Blowfish.TYPE.JSON_OBJECT); // type is required to JSON_OBJECT
-  null
+  res
 
 #/**
 # * Generates a encrypted hash of a given string then generate decrypted message.
@@ -85,6 +84,18 @@ Buffer = require('buffer').Buffer
   crypto.createHash 'sha256'
     .update _in
     .digest 'hex'
+
+@compress=(_in)->
+  zlib.deflateSync _in
+
+@uncompress=(_in)->
+  zlib.inflateSync _in
+
+@zip=(_in,cb)->
+  zlib.gzip _in,cb
+
+@unzip=(_in,cb)->
+  zlib.gunzip _in,cb
 
 #/**
 # * Generates a zlib deflat and inflate hash of a given string.

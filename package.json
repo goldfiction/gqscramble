@@ -23,7 +23,8 @@
     "test": "mocha --openssl-legacy-provider --require coffeescript/register --no-color --reporter min -t 20000 test/test.coffee",
     "test:watch":"nodemon --delay 2 -q -x \"npm test\"",
     "optional":" --reporter-option output=report.json ",
-    "install:nobin": "npm install --production --no-bin-links --no-optional --omit=optional --ignore-scripts",
+    "install:nobin": "npm install --no-bin-links --no-optional --omit=optional --ignore-scripts",
+    "install:prod":"npm install --production",
     "git":"git add .; git commit -m \"update\"; echo gitted...",
     "git:setup":"git config --global user.name \"glidev5\";git config --global user.email \"glidev5@gmail.com\""
   },

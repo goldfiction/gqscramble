@@ -1,11 +1,17 @@
 scramble=require '../app.coffee'
 assert=require 'assert'
 
+# dont modify these
 salt=
   secret:"your-secret-key-here"
   iv:"8byteIV!"
   text:"this is a test message"
 
+sha256_text="9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+
+md5_text="0add241c7230a0eec1d1d516b0c52264"
+
+# dummy test for code integrity
 it "should be able to run",(done)->
   done()
 
@@ -31,7 +37,7 @@ it "should be able to blowfish2",(done)->
 
 it "should be able to sha256",(done)->
   res=scramble.sha256 'test'
-  assert.equal res,"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+  assert.equal res,sha256_text
   done()
 
 it "should be able to zlib deflate",(done)->
@@ -54,12 +60,13 @@ it "should be able to zlib gzip",(done)->
 it "should be able to md5 check",(done)->
   md5=scramble.md5File
     file:"./test/testfile.txt"
-  assert.equal md5,"0add241c7230a0eec1d1d516b0c52264"
+  assert.equal md5,md5_text
   done()
 
 it "should be able to lzma compress",(done)->
   o=salt
   scramble.lzma.compress o,(e1,r)->
+    #console.log Buffer.from(r,'hex').toString("utf8").length+"/"+o.text.length
     scramble.lzma.uncompress 
       text:r
       ,(e2,r2)->

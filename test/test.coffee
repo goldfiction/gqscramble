@@ -30,13 +30,13 @@ it "should be able to blowfish2",(done)->
   done()
 
 it "should be able to sha256",(done)->
-  res=scramble.generateSha256Hash('test')
+  res=scramble.sha256 'test'
   assert.equal res,"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
   done()
 
 it "should be able to zlib deflate",(done)->
   text='lorem ipsum dolor sit amet'
-  buf=Buffer.from(text)
+  buf=Buffer.from text
   #console.log scramble.compress(buf).toString().length+"/"+text.length
   assert.equal scramble.uncompress(scramble.compress buf).toString(),text
   done()

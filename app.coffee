@@ -2,7 +2,6 @@ crypto = require 'crypto'
 Buffer = require('buffer').Buffer
 zlib = require 'zlib'
 Blowfish = require 'blowfish-node'
-crypto = require 'crypto'
 fs = require 'fs'
 
 @blowfish={}
@@ -74,7 +73,7 @@ fs = require 'fs'
 # * @param {string} _in The string to hash.
 # * @returns {string} The SHA256 hash in hexadecimal format.
 # */
-@generateSha256Hash=(_in)->
+@sha256=(_in)->
   crypto.createHash 'sha256'
     .update _in
     .digest 'hex'
@@ -92,16 +91,6 @@ fs = require 'fs'
   zlib.gunzip _in,cb
 
 #/**
-# * Generates a zlib deflat and inflate hash of a given string.
-# * @param {string} _in The string to hash.
-# * @returns {string} The original string.
-# */
-@zlibTest=(_in)->
-  input = _in || new Buffer('lorem ipsum dolor sit amet')
-  compressed = zlib.deflate input
-  zlib.inflate compressed
-
-#/**
 # * Generates a string from o.username, o.password and o.salt.
 # * @param {object} _o The options.
 # * @param {string} _o.username
@@ -111,7 +100,6 @@ fs = require 'fs'
 # */
 @sstring=(_o)->
   res=_o.username+":"+_o.password+"@"+_o.salt
-  #(res+"************").substring 0,12
 
 #/**
 # * Generates a string from salt.

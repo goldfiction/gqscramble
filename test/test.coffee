@@ -56,3 +56,13 @@ it "should be able to md5 check",(done)->
     file:"./test/testfile.txt"
   assert.equal md5,"0add241c7230a0eec1d1d516b0c52264"
   done()
+
+it "should be able to lzma compress",(done)->
+  o=salt
+  scramble.lzma.compress o,(e1,r)->
+    scramble.lzma.uncompress 
+      text:r
+      ,(e2,r2)->
+        assert.equal r2,o.text
+        done e1||e2
+  null

@@ -1,8 +1,10 @@
 crypto = require 'crypto'
 Buffer = require('buffer').Buffer
+fs = require 'fs'
+
+lzmalib = require 'lzma-native'
 zlib = require 'zlib'
 Blowfish = require 'blowfish-node'
-fs = require 'fs'
 
 @blowfish={}
 
@@ -67,6 +69,20 @@ fs = require 'fs'
 @md5File=(o)->
   @md5
     text:fs.readFileSync(o.file,'utf8')
+
+@lzma={}
+@lzma.compress=(o,cb)->
+  inputData = Buffer.from(o.text);
+  lzmalib.compress inputData,9,(result)->
+    #console.log 'Compressed data (Buffer):',result.toString('hex')
+    cb null,result.toString('hex')
+
+@lzma.uncompress=(o,cb)->
+  compressedData = Buffer.from o.text,'hex'
+  lzmalib.decompress compressedData,(result)->
+    #console.log 'Decompressed data (Buffer):',result
+    #console.log 'Decompressed text:',result.toString('utf8')
+    cb null,result.toString('utf8')
 
 #/**
 # * Generates a SHA256 hash of a given string.

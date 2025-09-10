@@ -15,7 +15,8 @@
         },
         {
             "runtimeArgs": [
-                "test"
+                "run",
+                "test:watch"
             ],
             "name": "Run npm test",
             "request": "launch",

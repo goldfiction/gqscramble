@@ -1,40 +1,32 @@
 scramble=require '../app.coffee'
 assert=require 'assert'
 
+salt=
+  secret:"your-secret-key-here"
+  iv:"8byteIV!"
+  text:"this is a test message"
+
 it "should be able to run",(done)->
   done()
 
 it "should be able to blowfish1",(done)->
-  o=
-    "secret":"your-secret-key-here"
-    "iv":"8byteIV!"
-    "text":"this is a test message"
-  res=scramble.testBlowFish1 o
+  o=salt
+  res=scramble.blowfish.v1.decrypt
+    iv:o.iv
+    secret:o.secret
+    text:scramble.blowfish.v1.encrypt o
   #console.log res
   assert.equal res,o.text
   done()
-
 
 it "should be able to blowfish2",(done)->
-  o=
-    "secret":"your-secret-key-here"
-    "iv":"8byteIV!"
-    "text":"this is a test message"
-  res=scramble.testBlowFish2 o
+  o=salt
+  res=scramble.blowfish.decrypt
+    secret:o.secret
+    iv:o.iv
+    text:scramble.blowfish.encrypt o
   #console.log res
   assert.equal res,o.text
-  done()
-
-it "should be able to blowfish with 2 steps",(done)->
-  o=
-    "secret":"your-secret-key-here"
-    "iv":"8byteIV!"
-    "text":"this is a test message"
-  res1=scramble.blowfishEncrypt o
-  #console.log res
-  o.encrypted=res1
-  res2=scramble.blowfishDecrypt o
-  assert.equal res2,o.text
   done()
 
 it "should be able to sha256",(done)->
@@ -58,4 +50,9 @@ it "should be able to zlib gzip",(done)->
     scramble.unzip buf2,(e2,buf3)->
       assert.equal buf3.toString('utf8'),text
       done e1||e2
-  
+
+it "should be able to md5 check",(done)->
+  md5=scramble.md5File
+    file:"./test/testfile.txt"
+  assert.equal md5,"0add241c7230a0eec1d1d516b0c52264"
+  done()

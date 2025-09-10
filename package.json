@@ -18,7 +18,8 @@
   "scripts": {
     "start": "export NODE_OPTIONS=--openssl-legacy-provider; coffee app.coffee",
     "test": "mocha --openssl-legacy-provider --require coffeescript/register -t 20000 test/test.coffee",
-    "install_nbl": "npm install --no-bin-links"
+    "install_nbl": "npm install --no-bin-links",
+    "git":"git add .; git commit -m \"update\"; echo gitted..."
   },
   "author": "glidev5@gmail.com",
   "license": "Apache-2"

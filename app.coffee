@@ -6,7 +6,14 @@ lzmalib = require 'lzma-native'
 zlib = require 'zlib'
 Blowfish = require 'blowfish-node'
 
+@fs=fs
+@Buffer=Buffer
+@crypto=crypto
+@zlib=zlib
+@lzmalib=lzmalib
+
 @blowfish={}
+@blowfish.blowfish=Blowfish
 
 #/**
 # * Generates a encrypted hash of a given string.
@@ -75,14 +82,14 @@ Blowfish = require 'blowfish-node'
   inputData = Buffer.from(o.text);
   lzmalib.compress inputData,9,(result)->
     #console.log 'Compressed data (Buffer):',result.toString('hex')
-    cb null,result.toString('hex')
+    cb null,result
 
 @lzma.uncompress=(o,cb)->
   compressedData = Buffer.from o.text,'hex'
   lzmalib.decompress compressedData,(result)->
     #console.log 'Decompressed data (Buffer):',result
     #console.log 'Decompressed text:',result.toString('utf8')
-    cb null,result.toString('utf8')
+    cb null,result
 
 #/**
 # * Generates a SHA256 hash of a given string.

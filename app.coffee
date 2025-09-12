@@ -3,14 +3,12 @@ Buffer = require('buffer').Buffer
 fs = require 'fs'
 
 lzmalib = require 'lzma-native'
-zlib = require 'zlib'
+zliblib = require 'zlib'
 Blowfish = require 'blowfish-node'
 
 @fs=fs
 @Buffer=Buffer
 @crypto=crypto
-@zlib=zlib
-@lzmalib=lzmalib
 
 @blowfish={}
 @blowfish.blowfish=Blowfish
@@ -78,6 +76,7 @@ Blowfish = require 'blowfish-node'
     text:fs.readFileSync(o.file,'utf8')
 
 @lzma={}
+@lzma.lib=lzmalib
 @lzma.compress=(o,cb)->
   inputData = Buffer.from(o.text);
   lzmalib.compress inputData,9,(result)->
@@ -101,17 +100,20 @@ Blowfish = require 'blowfish-node'
     .update _in
     .digest 'hex'
 
-@compress=(_in)->
-  zlib.deflateSync _in
+@zlib={}
+@zlib.zlib=zliblib
 
-@uncompress=(_in)->
-  zlib.inflateSync _in
+@zlib.compress=(_in)->
+  zliblib.deflateSync _in
 
-@zip=(_in,cb)->
-  zlib.gzip _in,cb
+@zlib.uncompress=(_in)->
+  zliblib.inflateSync _in
 
-@unzip=(_in,cb)->
-  zlib.gunzip _in,cb
+@zlib.zip=(_in,cb)->
+  zliblib.gzip _in,cb
+
+@zlib.unzip=(_in,cb)->
+  zliblib.gunzip _in,cb
 
 #/**
 # * Generates a string from o.username, o.password and o.salt.

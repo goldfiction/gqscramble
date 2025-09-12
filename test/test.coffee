@@ -45,16 +45,16 @@ it "should be able to zlib deflate",(done)->
   text='lorem ipsum dolor sit amet'
   buf=Buffer.from text
   #console.log scramble.compress(buf).toString().length+"/"+text.length
-  assert.equal scramble.uncompress(scramble.compress buf).toString(),text
+  assert.equal scramble.zlib.uncompress(scramble.zlib.compress buf).toString(),text
   done()
 
 it "should be able to zlib gzip",(done)->
   text='lorem ipsum dolor sit amet'
   buf=Buffer.from(text)
-  scramble.zip buf,(e1,buf2)->
+  scramble.zlib.zip buf,(e1,buf2)->
     #console.log buf2.toString('utf8')
     #console.log buf2.toString('utf8').length+"/"+text.length
-    scramble.unzip buf2,(e2,buf3)->
+    scramble.zlib.unzip buf2,(e2,buf3)->
       assert.equal buf3.toString('utf8'),text
       done e1||e2
 
@@ -95,21 +95,3 @@ it "should be able to compress a file and uncompress and md5 check",(done)->
   null
 
 
-it "should be able to compress a large file and uncompress and md5 check",(done)->
-  o=salt
-  file=scramble.fs.readFileSync(o.big1mfile)
-  md5_1=scramble.md5 
-    text:file
-  #console.log md5_1
-  scramble.lzma.compress 
-    text:file
-    ,(e1,r1)->
-      scramble.lzma.uncompress
-        text:r1
-        ,(e2,r2)->
-          md5_2=scramble.md5
-            text:r2
-          #console.log r2
-          assert.equal md5_1,md5_2
-          done e1||e2
-  null

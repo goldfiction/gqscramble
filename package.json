@@ -27,6 +27,7 @@
     "install:nobin": "npm install --no-bin-links --no-optional --omit=optional --ignore-scripts",
     "install:prod":"npm install --production",
     "git":"git add .; git commit -m \"update\"; echo gitted...",
+    "git:push":"git push scm; echo pushed...",
     "git:setup":"git config --global user.name \"glidev5\";git config --global user.email \"glidev5@gmail.com\""
   },
   "author": "glidev5@gmail.com",

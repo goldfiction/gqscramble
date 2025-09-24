@@ -30,6 +30,7 @@ it "should be able to compress a large file and uncompress and md5 check",(done)
           md5_2=scramble.md5
             text:r2
           #console.log r2
+          console.log Buffer.from(r1,'hex').toString("utf8").length+"/"+file.toString("utf8").length
           assert.equal md5_1,md5_2
           done e1||e2
   null

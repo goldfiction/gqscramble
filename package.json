@@ -1,10 +1,11 @@
 {
   "name": "gqscramble",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A small utility for communication and data distributing",
   "main": "app.coffee",
   "node_version": "18.20.2",
   "repository": "git@git.hub:goldfiction/gqscramble.git",
+  "private": false,
   "dependencies": {
     "zlib": "1.0.5",
     "blowfish-node": "1.1.4",

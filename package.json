@@ -1,34 +1,36 @@
 {
   "name": "gqscramble",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A small utility for communication and data distributing",
   "main": "app.coffee",
   "node_version": "18.20.2",
   "dependencies": {
-    "sjson5":"0.1.7",
-    "gqcoffee":"1.0.25",
-    "gqdoq":"1.1.1",
-    "zlib":"1.0.5",
-    "blowfish-node":"1.1.4",
-    "lzma-native":""
+    "sjson5": "0.1.7",
+    "gqcoffee": "1.0.25",
+    "gqdoq": "1.1.1",
+    "zlib": "1.0.5",
+    "blowfish-node": "1.1.4",
+    "lzma-native": "8.0.6",
+    "seedrandom": "3.0.5"
   },
-  "devDependencies":{
-    "mocha":"11.7.1",
-    "coffeescript":"2.7.0",
-    "nodemon":"3.1.10",
-    "ansi":""
+  "devDependencies": {
+    "mocha": "11.7.1",
+    "coffeescript": "2.7.0",
+    "nodemon": "3.1.10",
+    "ansi": "0.3.1",
+    "gqtest": ">0.0.15"
   },
   "scripts": {
     "start": "export NODE_OPTIONS=--openssl-legacy-provider; coffee app.coffee",
-    "test": "mocha --openssl-legacy-provider --require coffeescript/register --no-color --reporter min -t 20000 test/test.coffee",
-    "test:watch":"nodemon --delay 2 -q -x \"npm test\"",
+    "test": "node --openssl-legacy-provider --require coffeescript/register test/test.coffee",
+    "test:watch": "nodemon --delay 2 -q -x \"npm test\"",
     "test:slow": "mocha --openssl-legacy-provider --require coffeescript/register --no-color --reporter min -t 20000 test/test.slow.coffee",
-    "optional":" --reporter-option output=report.json ",
-    "install:nobin": "npm install --no-bin-links --no-optional --omit=optional --ignore-scripts",
-    "install:prod":"npm install --production",
-    "git":"git add .; git commit -m \"update\"; echo gitted...",
-    "git:push":"git push scm; echo pushed...",
-    "git:setup":"git config --global user.name \"glidev5\";git config --global user.email \"glidev5@gmail.com\";git branch --set-upstream-to=scm/master master;"
+    "optional": " --reporter-option output=report.json ",
+    "preinstall": "npm install --no-bin-links --omit=optional --ignore-scripts",
+    "install:prod": "npm install --production",
+    "git": "git add .; git commit -m \"update\"; echo gitted...",
+    "git:push": "git push scm; echo pushed...",
+    "git:setup": "git config --global user.name \"glidev5\";git config --global user.email \"glidev5@gmail.com\";git branch --set-upstream-to=scm/master master;"
   },
   "author": "glidev5@gmail.com",
   "license": "Apache-2"

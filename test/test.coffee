@@ -1,5 +1,8 @@
 scramble=require '../app.coffee'
 assert=require 'assert'
+tests=require 'gqtest'
+it=tests.it
+run=tests.doRun
 
 # dont modify these
 salt=
@@ -94,4 +97,5 @@ it "should be able to compress a file and uncompress and md5 check",(done)->
           done e1||e2
   null
 
+run()
 

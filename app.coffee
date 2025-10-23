@@ -5,6 +5,7 @@ fs = require 'fs'
 lzmalib = require 'lzma-native'
 zliblib = require 'zlib'
 Blowfish = require 'blowfish-node'
+seedrandom = require 'seedrandom'
 
 @fs=fs
 @Buffer=Buffer
@@ -134,3 +135,70 @@ Blowfish = require 'blowfish-node'
 @silible=(_o)->
   null
 
+@switcher=(o)->
+  # o.str
+  # o.index
+  hay=o.str
+  stack=o.str
+  for i,key in o.index
+    stack[key]=hay[i]
+  return stack
+
+@unswitcher=(o)->
+  # o.str
+  # o.index
+  hay=o.str
+  stack=o.str
+  for i,key in o.index
+    stack[i]=hay[key]
+  return stack
+
+@shuffle = (array) ->
+  currentIndex = array.length
+  temporaryValue = undefined
+  randomIndex = undefined
+
+  # While there remain elements to shuffle...
+  while currentIndex isnt 0
+    # Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex--
+
+    # And swap it with the current element.
+    temporaryValue = array[currentIndex]
+    array[currentIndex] = array[randomIndex]
+    array[randomIndex] = temporaryValue
+
+  array
+
+# Define a function to shuffle an array using the Fisher-Yates algorithm
+# and a seeded PRNG
+@shuffleArraySeeded = (array, seed) ->
+  # Create a seeded random number generator
+  rng = seedrandom seed
+
+  # Create a copy of the array to avoid modifying the original
+  shuffled = array.slice()
+
+  currentIndex = shuffled.length
+  temporaryValue = undefined
+  randomIndex = undefined
+
+  # While there remain elements to shuffle...
+  while currentIndex isnt 0
+    # Pick a remaining element...
+    randomIndex = Math.floor(rng() * currentIndex)
+    currentIndex -= 1
+
+    # And swap it with the current element.
+    temporaryValue = shuffled[currentIndex]
+    shuffled[currentIndex] = shuffled[randomIndex]
+    shuffled[randomIndex] = temporaryValue
+
+  shuffled
+
+@sVeryUnique = ()->
+  (performance.now()*Math.random() + '').replace('.','');
+
+@seedFromString=(str)->
+  Math.Floor(seedrandom(str).quick()*10000000000000000)
